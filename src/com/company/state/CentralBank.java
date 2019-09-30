@@ -1,5 +1,7 @@
 package com.company.state;
 
+import com.company.ObjectWithMoney;
+
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.LinkedList;
@@ -37,16 +39,30 @@ public class CentralBank {
         accountMoney -= value;
     }
 
-    public void moneyAppend(int value) {
+    private void moneyAppend(int value) {
         accountMoney += value;
     }
 
 
+
+
+    public static List<String> transaction = new LinkedList<>();
+
+    private static List<CentralBank> accountList = new LinkedList<>();
+
     public static List<CentralBank> getAccountList() {
         return accountList;
     }
+    
+    public static void accountMoneyAppend(ObjectWithMoney object, String accountNumber, int value) {
+        object.moneySubtract(value);
+        CentralBank.getAccount(accountNumber).moneyAppend(value);
+    }
 
-    static List<CentralBank> accountList = new LinkedList<>();
+    public static void accountMoneySubtract(String accountNumber, ObjectWithMoney object, int value) {
+        CentralBank.getAccount(accountNumber).moneySubtract(value);
+        object.moneyAppend(value);
+    }
 
     public static String createAccount(String name, boolean organization) {
         return createAccount(name, organization, 0);
