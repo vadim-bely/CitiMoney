@@ -2,6 +2,7 @@ package com.company.state;
 
 import com.company.ObjectWithMoney;
 
+import java.lang.reflect.Array;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.LinkedList;
@@ -10,7 +11,7 @@ import java.util.List;
 public class CentralBank {
 
     private String accountNumber;
-    private int accountMoney = 0;
+    private int accountMoney;
     private String name;
     private boolean organization = true;
 
@@ -46,21 +47,24 @@ public class CentralBank {
 
 
 
-    public static List<String> transaction = new LinkedList<>();
-
+    public static List<String[]> transaction = new LinkedList<>();
     private static List<CentralBank> accountList = new LinkedList<>();
 
     public static List<CentralBank> getAccountList() {
         return accountList;
     }
-    
-    public static void accountMoneyAppend(ObjectWithMoney object, String accountNumber, int value) {
-        object.moneySubtract(value);
-        CentralBank.getAccount(accountNumber).moneyAppend(value);
+
+    public static List<String[]> getTransaction() {
+        return transaction;
     }
 
-    public static void accountMoneySubtract(String accountNumber, ObjectWithMoney object, int value) {
-        CentralBank.getAccount(accountNumber).moneySubtract(value);
+    public static void accountMoneyAppend(ObjectWithMoney object, int value) {
+        object.moneySubtract(value);
+        CentralBank.getAccount(object.getAccountNumber()).moneyAppend(value);
+    }
+
+    public static void accountMoneySubtract(ObjectWithMoney object, int value) {
+        CentralBank.getAccount(object.getAccountNumber()).moneySubtract(value);
         object.moneyAppend(value);
     }
 
@@ -89,14 +93,16 @@ public class CentralBank {
                     return ac;
                 }
         }
-        return null;
+        throw new IllegalArgumentException(" счёт не найден ");
     }
 
     public static boolean transaction(String accountIn, String accountOut, int value) {
         CentralBank.getAccount(accountIn).moneySubtract(value);
         CentralBank.getAccount(accountOut).moneyAppend(value);
+        transaction.add(new String[] {accountIn, accountOut, Integer.toString(value)});
         return true;
     }
+
 
     @Override
     public String toString() {

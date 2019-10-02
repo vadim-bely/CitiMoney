@@ -6,4 +6,8 @@ public interface ObjectWithMoney {
 
     void moneyAppend(int value);
 
+    default String getAccountNumber() {
+        return null;
+    }
+
 }

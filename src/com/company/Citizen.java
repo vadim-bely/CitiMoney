@@ -6,6 +6,15 @@ public class Citizen implements ObjectWithMoney {
     private int age;
     private String number;
     private int cash = 0;
+    private String accountNumber = null;
+
+    public Citizen(String name, int age, String number, int cash, String accountNumber) {
+        this.name = name;
+        this.age = age;
+        this.number = number;
+        this.cash = cash;
+        this.accountNumber = accountNumber;
+    }
 
     public Citizen(String name, int age, String number, int cash) {
         this.name = name;
@@ -39,6 +48,11 @@ public class Citizen implements ObjectWithMoney {
 
     public int getCash() {
         return cash;
+    }
+
+    @Override
+    public String getAccountNumber() {
+        return accountNumber;
     }
 
     public void setNumber(String number) {

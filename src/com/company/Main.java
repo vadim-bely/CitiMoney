@@ -38,14 +38,17 @@ public class Main {
         }*/
 
         Company company = new Company("Программист Вася");
-        Company company1 = new Company("VIVT");
+        Company company1 = new Company("VIVT", 1000000);
+        CentralBank.accountMoneyAppend(company1, 1000000);
 
-        CentralBank.getAccount(company1.getAccountNumber()).moneyAppend(1000000);
 
         CentralBank.transaction(company1.getAccountNumber(), company.getAccountNumber(), 500000);
 
         System.out.println(CentralBank.getAccount(company.getAccountNumber()).getAccountMoney());
         System.out.println(CentralBank.getAccount(company1.getAccountNumber()).getAccountMoney());
+        System.out.print(CentralBank.getTransaction().get(0)[0] + " ");
+        System.out.print(CentralBank.getTransaction().get(0)[1] + " ");
+        System.out.println(CentralBank.getTransaction().get(0)[2]);
     }
 
 }
