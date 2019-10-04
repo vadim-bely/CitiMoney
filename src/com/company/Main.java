@@ -19,23 +19,35 @@ public class Main {
 
         List<Citizen> citizens = new LinkedList<>();
 
-        for (int i = 0; i < 3; i++) {
-            citizens.add(new Citizen("vasili" + i, (i+1) *10,  Integer.toString(i+10), 10000));
+        for (int i = 0; i < 10000; i++) {
+            citizens.add(new Citizen("vasili" + i,
+                                    (i+1) * 10 % 7,
+                                        Integer.toString(i+10),
+                                    10000,
+                                        CentralBank.createAccount("vasili" + i, false, 100000)));
         }
+
+
+        for (Citizen c: citizens) {
+            System.out.println(CentralBank.getAccount(c.getAccountNumber()));
+        }
+
 
         List<operation> operationList = new LinkedList<>();
 
+
+        /*
         operationList.add(new operation(123, citizens.get(0), citizens.get(1), 500));
         operationList.add(new operation(123, citizens.get(2), citizens.get(1), 500));
-        operationList.add(new ShopOp( 123, citizens.get(0), citizens.get(2), 100, state));
+        operationList.add(new ShopOp( 123, citizens.get(0), citizens.get(2), 100, state));*/
 
 
-        //System.out.println(CentralBank.createAccount("dsfds", true));
+       /* //System.out.println(CentralBank.createAccount("dsfds", true));
         //System.out.println(CentralBank.createAccount("dsfаds", true, 100000));
 
-        /*for (CentralBank c: CentralBank.getAccountList()) {
+        for (CentralBank c: CentralBank.getAccountList()) {
             System.out.println(c);
-        }*/
+        }
 
         Company company = new Company("Программист Вася");
         Company company1 = new Company("VIVT", 1000000);
@@ -48,7 +60,7 @@ public class Main {
         System.out.println(CentralBank.getAccount(company1.getAccountNumber()).getAccountMoney());
         System.out.print(CentralBank.getTransaction().get(0)[0] + " ");
         System.out.print(CentralBank.getTransaction().get(0)[1] + " ");
-        System.out.println(CentralBank.getTransaction().get(0)[2]);
+        System.out.println(CentralBank.getTransaction().get(0)[2]);*/
     }
 
 }

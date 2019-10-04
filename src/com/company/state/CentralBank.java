@@ -3,10 +3,7 @@ package com.company.state;
 import com.company.ObjectWithMoney;
 
 import java.lang.reflect.Array;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 public class CentralBank {
 
@@ -14,12 +11,25 @@ public class CentralBank {
     private int accountMoney;
     private String name;
     private boolean organization = true;
+    private String personalPrivateNumber;
 
-    private CentralBank(int startMoney, String name, boolean organization, String accountNumber) {
+    private CentralBank(int startMoney, String name, boolean organization, String accountNumber, String personalPrivateNumber) {
         this.accountMoney = startMoney;
         this.name = name;
         this.organization = organization;
         this.accountNumber = accountNumber;
+        this.personalPrivateNumber = personalPrivateNumber;
+    }
+
+
+    private void moneySubtract(int value) {
+
+        if (accountMoney < value)  throw new IllegalArgumentException(" недостаточно денег ");
+        accountMoney -= value;
+    }
+
+    private void moneyAppend(int value) {
+        accountMoney += value;
     }
 
     public String getAccountNumber() {
@@ -34,20 +44,9 @@ public class CentralBank {
         return name;
     }
 
-    private void moneySubtract(int value) {
-
-        if (accountMoney < value)  throw new IllegalArgumentException(" недостаточно денег ");
-        accountMoney -= value;
-    }
-
-    private void moneyAppend(int value) {
-        accountMoney += value;
-    }
 
 
-
-
-    public static List<String[]> transaction = new LinkedList<>();
+    private static List<String[]> transaction = new LinkedList<>();
     private static List<CentralBank> accountList = new LinkedList<>();
 
     public static List<CentralBank> getAccountList() {
@@ -74,7 +73,6 @@ public class CentralBank {
 
     public static String createAccount(String name, boolean organization,  int startMoney) {
         String accountNumber = Integer.toString(GregorianCalendar.getInstance().get(Calendar.YEAR));
-
         int number = accountList.size() + 1;
 
         accountNumber += number < 10 ?
@@ -82,8 +80,10 @@ public class CentralBank {
         "00" + number : number < 1000 ?
         "0" + number : number;
 
-        accountList.add(new CentralBank(startMoney, name, organization, accountNumber));
+        int num = new Random().nextInt(1000);
+        String pNum = num < 10 ? "00" + num : num < 100 ? "0" + num : "" + num;
 
+        accountList.add(new CentralBank(startMoney, name, organization, accountNumber, pNum));
         return accountNumber;
     }
 
